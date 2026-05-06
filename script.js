@@ -266,6 +266,28 @@ if (!reduceMotion) {
 
   revealItems.forEach((item) => revealObserver.observe(item));
 
+  let parallaxFrame = 0;
+
+  const updateScrollParallax = () => {
+    parallaxFrame = 0;
+    const offset = Math.min(window.scrollY, 2200);
+    document.body.style.setProperty("--scroll-parallax", `${Math.round(offset)}px`);
+  };
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (parallaxFrame) {
+        return;
+      }
+
+      parallaxFrame = window.requestAnimationFrame(updateScrollParallax);
+    },
+    { passive: true }
+  );
+
+  updateScrollParallax();
+
   window.addEventListener(
     "pointermove",
     (event) => {
