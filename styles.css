@@ -1266,6 +1266,24 @@ h1 {
   white-space: nowrap;
 }
 
+.document-list small a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.document-list__item--ready small {
+  background: rgba(241, 204, 79, 0.16);
+  border-color: rgba(241, 204, 79, 0.45);
+}
+
+.document-list__item--ready small a {
+  font-weight: 950;
+}
+
+.document-list__item--ready small a:hover {
+  color: var(--red);
+}
+
 .venue {
   display: grid;
   grid-template-columns: 1fr;
@@ -1587,7 +1605,10 @@ h1 {
   }
 
   .identity-card img {
-    aspect-ratio: 16 / 9;
+    height: auto;
+    aspect-ratio: 2245 / 1536;
+    object-fit: contain;
+    background: #367fba;
   }
 
   .identity-card > div {
