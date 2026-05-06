@@ -538,71 +538,6 @@ a {
   line-height: 0.8;
 }
 
-.hero-stamp {
-  position: absolute;
-  top: clamp(22px, 3vw, 42px);
-  right: clamp(22px, 3vw, 42px);
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: clamp(104px, 12vw, 150px);
-  aspect-ratio: 1;
-  color: rgba(241, 204, 79, 0.72);
-  border: 2px solid rgba(241, 204, 79, 0.46);
-  border-radius: 50%;
-  opacity: 0.2;
-  transform: rotate(-9deg) scale(0.9);
-  animation:
-    stampIn 880ms 420ms cubic-bezier(0.18, 0.9, 0.2, 1.14) both,
-    stampGlow 7s 1.4s ease-in-out infinite;
-}
-
-.hero-stamp::before,
-.hero-stamp::after {
-  position: absolute;
-  border-radius: 50%;
-  content: "";
-}
-
-.hero-stamp::before {
-  inset: 8px;
-  border: 1px solid rgba(241, 204, 79, 0.52);
-}
-
-.hero-stamp::after {
-  inset: 24%;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-}
-
-.hero-stamp span,
-.hero-stamp small,
-.hero-stamp em {
-  position: relative;
-  z-index: 1;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.hero-stamp span {
-  font-size: clamp(26px, 3vw, 42px);
-  font-weight: 950;
-}
-
-.hero-stamp small {
-  margin-top: -12px;
-  font-size: clamp(13px, 1.4vw, 18px);
-  font-weight: 950;
-  letter-spacing: 0.1em;
-}
-
-.hero-stamp em {
-  margin-top: -10px;
-  font-size: 9px;
-  font-style: normal;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-}
-
 @keyframes headerLines {
   from {
     background-position: 0 0, 0 0, 0 0;
@@ -610,27 +545,6 @@ a {
 
   to {
     background-position: 54px 54px, 54px 54px, 0 0;
-  }
-}
-
-@keyframes stampIn {
-  from {
-    opacity: 0;
-    transform: rotate(-18deg) scale(1.35);
-    filter: blur(2px);
-  }
-
-  to {
-    opacity: 0.2;
-    transform: rotate(-9deg) scale(0.9);
-    filter: blur(0);
-  }
-}
-
-@keyframes stampGlow {
-  50% {
-    opacity: 0.26;
-    box-shadow: 0 0 34px rgba(241, 204, 79, 0.16);
   }
 }
 
@@ -1768,10 +1682,6 @@ h1 {
     font-size: 18px;
   }
 
-  .hero-stamp {
-    display: none;
-  }
-
   .primary-link {
     width: 100%;
   }
@@ -1787,7 +1697,6 @@ h1 {
   .is-typing::after,
   .primary-link::after,
   .map-link::after,
-  .hero-stamp,
   .photo-track,
   .splash-screen,
   .splash-screen::before,
