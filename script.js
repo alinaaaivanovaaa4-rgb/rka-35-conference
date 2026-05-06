@@ -54,6 +54,7 @@ const typewriterElements = document.querySelectorAll("[data-typewriter]");
 const photoRiver = document.querySelector("#photoRiver");
 const scrollVideo = document.querySelector("[data-scroll-video]");
 const soundButton = document.querySelector("[data-sound-button]");
+const slotNumbers = document.querySelectorAll("[data-slot-number]");
 
 const galleryPhotos = Array.from({ length: 27 }, (_, index) => {
   const number = String(index + 1).padStart(2, "0");
@@ -106,6 +107,45 @@ if (photoRiver) {
     createPhotoTrack(galleryPhotos.slice(0, splitIndex), "photo-track--one"),
     createPhotoTrack(galleryPhotos.slice(splitIndex), "photo-track--two")
   );
+}
+
+const createSlotNumber = (element, index) => {
+  const value = String(element.dataset.slotNumber || element.textContent.trim());
+  element.textContent = "";
+  element.setAttribute("aria-label", value);
+  element.style.setProperty("--slot-delay", `${index * 90}ms`);
+
+  value.split("").forEach((char, digitIndex) => {
+    if (!/\d/.test(char)) {
+      element.append(document.createTextNode(char));
+      return;
+    }
+
+    const digit = document.createElement("span");
+    const track = document.createElement("span");
+    const target = 10 + Number(char);
+
+    digit.className = "slot-digit";
+    track.className = "slot-track";
+    digit.style.setProperty("--slot-target", String(target));
+    digit.style.setProperty("--slot-delay", `${index * 120 + digitIndex * 90}ms`);
+
+    Array.from({ length: 20 }, (_, numberIndex) => numberIndex % 10).forEach((number) => {
+      const numberElement = document.createElement("span");
+      numberElement.textContent = String(number);
+      track.append(numberElement);
+    });
+
+    digit.append(track);
+    element.append(digit);
+  });
+};
+
+if (slotNumbers.length) {
+  slotNumbers.forEach(createSlotNumber);
+  if (reduceMotion) {
+    slotNumbers.forEach((number) => number.classList.add("is-rolling"));
+  }
 }
 
 const typeText = (element) => {
@@ -184,8 +224,24 @@ if (!reduceMotion) {
 
   typewriterElements.forEach(typeText);
 
+  if (slotNumbers.length) {
+    const slotObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            slotNumbers.forEach((number) => number.classList.add("is-rolling"));
+            slotObserver.disconnect();
+          }
+        });
+      },
+      { threshold: 0.32, rootMargin: "0px 0px -12% 0px" }
+    );
+
+    slotObserver.observe(document.querySelector(".days-module"));
+  }
+
   const revealItems = document.querySelectorAll(
-    ".identity-card, .letter-block, .days-module__heading, .day-card, .day-bridge, .facts > div, .document-list > article, .contacts__grid > a"
+    ".identity-card, .letter-block, .days-module__heading, .day-card, .facts > div, .document-list > article, .contacts__grid > a"
   );
 
   revealItems.forEach((item, index) => {
