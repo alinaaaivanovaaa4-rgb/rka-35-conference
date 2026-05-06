@@ -3,6 +3,7 @@ const siteNav = document.querySelector("#siteNav");
 const splashScreen = document.querySelector("#splashScreen");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const splashStorageKey = "rkaIntroSeenV3";
+let introWasSkipped = false;
 
 const hideSplashScreen = (delay = 0) => {
   if (!splashScreen) {
@@ -26,6 +27,7 @@ const shouldSkipSplash = () => {
 };
 
 if (shouldSkipSplash()) {
+  introWasSkipped = true;
   splashScreen?.remove();
   document.body.classList.remove("is-intro-lock");
 } else {
@@ -149,10 +151,11 @@ if (slotNumbers.length) {
 }
 
 const typeText = (element) => {
-  const text = element.textContent.replace(/\s+/g, " ").trim();
+  const text = element.dataset.typewriterText || element.textContent.replace(/\s+/g, " ").trim();
   const speed = Number(element.dataset.typeSpeed || 18);
-  const delay = Number(element.dataset.typeDelay || 0);
+  const delay = Number(element.dataset.typeDelay || 0) + (introWasSkipped ? 120 : 4080);
 
+  element.dataset.typewriterText = text;
   element.setAttribute("aria-label", text);
   element.style.minHeight = `${Math.ceil(element.getBoundingClientRect().height)}px`;
   element.textContent = "";
@@ -177,6 +180,8 @@ const typeText = (element) => {
     tick();
   }, delay);
 };
+
+typewriterElements.forEach(typeText);
 
 if (!reduceMotion) {
   if (scrollVideo) {
@@ -221,8 +226,6 @@ if (!reduceMotion) {
 
     videoObserver.observe(scrollVideo);
   }
-
-  typewriterElements.forEach(typeText);
 
   if (slotNumbers.length) {
     const slotObserver = new IntersectionObserver(
