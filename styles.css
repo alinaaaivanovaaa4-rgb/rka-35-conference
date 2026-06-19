@@ -619,9 +619,11 @@ h1 {
 
 .letter-block p,
 .letter-block li {
-  max-width: 920px;
+  max-width: 900px;
   color: var(--text);
-  font-size: 18px;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.55;
 }
 
 .greeting p {
@@ -943,8 +945,8 @@ h1 {
 .text-list,
 .requirements-list {
   display: grid;
-  gap: 12px;
-  max-width: 980px;
+  gap: 10px;
+  max-width: 900px;
   padding-left: 24px;
   margin: 0;
 }
