@@ -19,6 +19,7 @@
 }
 
 html {
+  overflow-x: hidden;
   scroll-behavior: smooth;
   scroll-padding-top: 96px;
 }
@@ -28,6 +29,7 @@ body {
   --pointer-y: 18%;
   --scroll-parallax: 0px;
   position: relative;
+  overflow-x: hidden;
   min-height: 100vh;
   margin: 0;
   color: var(--ink);
@@ -454,6 +456,8 @@ a {
   position: sticky;
   top: 104px;
   align-self: start;
+  min-width: 0;
+  box-sizing: border-box;
   overflow: hidden;
   color: #fff;
   background: rgba(16, 43, 104, 0.88);
@@ -488,6 +492,8 @@ a {
 }
 
 .letter {
+  min-width: 0;
+  box-sizing: border-box;
   background: rgba(255, 255, 255, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.48);
   box-shadow: 0 28px 80px rgba(7, 26, 50, 0.22);
@@ -788,11 +794,11 @@ h1 {
 }
 
 .day-card:first-child::after {
-  content: "10";
+  content: "24";
 }
 
 .day-card:last-child::after {
-  content: "11";
+  content: "25";
 }
 
 .day-card__date,
@@ -895,6 +901,87 @@ h1 {
   gap: 12px;
   padding-left: 24px;
   margin: 0;
+}
+
+.organizer-logos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  max-width: 1040px;
+  margin: 0 0 28px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+
+.organizer-logos img {
+  display: block;
+  width: 100%;
+  height: 132px;
+  padding: 18px;
+  background: #fff;
+  object-fit: contain;
+  transition:
+    transform 220ms ease,
+    filter 220ms ease;
+}
+
+.organizer-logos img:hover {
+  filter: drop-shadow(0 12px 18px rgba(16, 43, 104, 0.16));
+  transform: scale(1.08);
+}
+
+.organizer-logos img[alt*="Содружество"] {
+  padding: 14px 10px;
+}
+
+.info-section {
+  display: grid;
+  gap: 18px;
+}
+
+.text-list,
+.requirements-list {
+  display: grid;
+  gap: 12px;
+  max-width: 980px;
+  padding-left: 24px;
+  margin: 0;
+}
+
+.deadline-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  max-width: 980px;
+  border: 1px solid var(--line);
+}
+
+.deadline-grid div {
+  min-height: 126px;
+  padding: 22px;
+  background: rgba(231, 241, 251, 0.54);
+  border-right: 1px solid var(--line);
+}
+
+.deadline-grid div:last-child {
+  border-right: 0;
+}
+
+.deadline-grid span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.deadline-grid strong {
+  display: block;
+  margin-top: 9px;
+  color: var(--blue-dark);
+  font-size: clamp(18px, 1.7vw, 23px);
+  line-height: 1.2;
 }
 
 .media-block {
@@ -1426,6 +1513,7 @@ h1 {
   .photo-card {
     width: clamp(170px, 28vw, 230px);
   }
+
 }
 
 @media (max-width: 680px) {
@@ -1494,7 +1582,9 @@ h1 {
   }
 
   .identity-card,
+  .letter,
   .facts,
+  .deadline-grid,
   .document-list,
   .venue,
   .media-block,
@@ -1502,6 +1592,20 @@ h1 {
   .days-grid,
   .contacts__grid {
     grid-template-columns: 1fr;
+  }
+
+  .identity-card,
+  .letter {
+    width: 100%;
+  }
+
+  .organizer-logos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .organizer-logos img {
+    height: 118px;
+    padding: 14px;
   }
 
   .media-video {
@@ -1536,12 +1640,29 @@ h1 {
   }
 
   .facts div,
+  .deadline-grid div,
   .document-list article,
   .document-list article:nth-child(odd),
   .document-list article:nth-child(even) {
     padding-right: 0;
     padding-left: 0;
     border-right: 0;
+  }
+
+  .deadline-grid {
+    border-right: 0;
+    border-left: 0;
+  }
+
+  .deadline-grid div {
+    min-height: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .deadline-grid div:last-child {
+    border-bottom: 0;
   }
 
   .document-list article {
@@ -1576,9 +1697,9 @@ h1 {
   }
 
   .days-module__portrait {
-    right: -64px;
+    right: -36px;
     bottom: -30px;
-    width: 190px;
+    width: 160px;
     opacity: 0.06;
   }
 
@@ -1619,6 +1740,21 @@ h1 {
 
   .venue__content h2 {
     font-size: 34px;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .venue__content p {
+    overflow-wrap: anywhere;
+  }
+
+  .map-link {
+    width: 100%;
+    text-align: center;
+  }
+
+  .map-frame {
+    width: 100%;
   }
 
   .map-link {
@@ -1662,6 +1798,11 @@ h1 {
   .slot-track {
     animation: none;
     transition: none;
+  }
+
+  .organizer-logos img:hover {
+    filter: none;
+    transform: none;
   }
 
   body::before,
