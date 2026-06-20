@@ -62,7 +62,7 @@ const galleryPhotos = Array.from({ length: 27 }, (_, index) => {
   const number = String(index + 1).padStart(2, "0");
   return {
     src: `assets/media/photos/photo-${number}.jpg`,
-    alt: `Фотография мероприятия Российской криминологической ассоциации ${number}`,
+    alt: `Фотография мероприятия «РКА им. А.И. Долговой» ${number}`,
   };
 });
 
